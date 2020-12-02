@@ -3,9 +3,13 @@ import React from "react";
 const FOLLOW = "FOLLOW";
 const UNFOLLOW = "UNFOLLOW";
 const SET_USERS = 'SET-USERS'
+const SET_USER_TOTAL_COUNT = 'USER-TOTAL-COUNT'
 
 let initialState = {
-  users: []
+  users: [],
+  usersPerPage: 5,
+  usersCurrentPage: 3,
+  usersTotalCount: 0,
 };
 
 const UserReducer = (state = initialState, action) => {
@@ -16,7 +20,7 @@ const UserReducer = (state = initialState, action) => {
                 ...state,
                 users: state.users.map((item) => {
                     if (item.id === action.userID) {
-                        return {...item, isFollowed: true};
+                        return {...item, followed: true};
                     }
                     return item;
                 }),
@@ -27,7 +31,7 @@ const UserReducer = (state = initialState, action) => {
             stateCopy.users = [...state.users];
             stateCopy.users.map((item) => {
                 if (item.id === action.userID) {
-                    item.isFollowed = false;
+                    item.followed = false;
                     return item;
                 } else {
                     return item;
@@ -37,8 +41,17 @@ const UserReducer = (state = initialState, action) => {
         }
 
         case SET_USERS:
-            return {...state, users: [...state.users,...action.users]}
-        default:
+            // let stateCopy = {...state};
+            // stateCopy.users = [...state.users];
+            // stateCopy.users.push(...action.users);
+            // return stateCopy;
+
+            return {...state, users: [...action.users]} // <<< POTENTIAL BUG !!!
+
+        case SET_USER_TOTAL_COUNT:
+            return {...state, usersTotalCount: action.totalCount/100}
+
+            default:
             return state;
     }
 };
@@ -55,4 +68,7 @@ export const UserSetterAC = (users) => {
     return {type: SET_USERS, users};
 }
 
+export const SetUsersCountAC = (totalCount)=>{
+    return {type: SET_USER_TOTAL_COUNT, totalCount}
+}
 export default UserReducer;
