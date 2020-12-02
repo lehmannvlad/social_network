@@ -1,0 +1,21 @@
+.menu {
+    grid-area: m;
+    background-color: greenyellow;
+    padding:30%;
+}
+
+.item a {
+    color: white;
+    text-decoration: none;
+}
+
+.item a.selected {
+    color: rgb(7, 19, 133);
+    font-weight: bold;
+}
+/* 
+.item :hover {
+	background: rgba(0,0,0,0);
+	color: #3a7999;
+	box-shadow: inset 0 0 0 3px #3a7999;
+} */

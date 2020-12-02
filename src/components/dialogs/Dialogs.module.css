@@ -1,0 +1,16 @@
+.content {
+    display: grid;
+    grid-template-columns: 2fr 10fr;
+  }
+
+.friendList{
+padding:5px;
+ }  
+
+.friend {
+color:rgb(22, 32, 170);
+}
+
+.friendList .active {
+color: gold;
+}

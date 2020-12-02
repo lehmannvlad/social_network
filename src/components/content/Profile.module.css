@@ -1,0 +1,8 @@
+.main {
+ background-color: cornflowerblue;
+}
+
+.main .pic img {
+    width: 100%;
+    height: 150px;
+}
