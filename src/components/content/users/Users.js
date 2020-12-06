@@ -2,37 +2,27 @@ import React from "react";
 import s from "./users.module.css";
 import * as axios from "axios";
 import userPhoto from "../../../assets/images/user-vector-avatar-png-image.jpg"
+import Preloader from "../../common/preloader";
 
-class Users extends React.Component {
-    // here constructor is not essential
-    constructor(props) {
-        super(props);
+const Users = (props)=> {
+
+    let pagesCount = Math.ceil(props.usersTotalCount / props.usersPerPage)
+    let pages = [];
+    for (let i = 1; i <= pagesCount; i++) {
+        pages.push(i)
     }
 
-    componentDidMount() {
-        axios.get('https://social-network.samuraijs.com/api/1.0/users').then(response => {
-                this.props.setUsers(response.data.items);
-                this.props.setUsersTotalCount(response.data.totalCount)
-            }
-        )
-    }
+    return <div>
 
-    render() {
-        let pagesCount = Math.ceil(this.props.usersTotalCount / this.props.usersPerPage)
-        let pages = [];
-        for (let i = 1; i <= pagesCount; i++) {
-            pages.push(i)
-        }
 
-        return <div>
-            <div>UserCount:{this.props.usersTotalCount*100}</div>
+        <div>UserCount:{props.usersTotalCount*100}</div>
 
-            {pages.map(p=>{
-               return  <span>{p}</span>
-            })}
+        {pages.map(p=>{
+            return  <span className={props.usersCurrentPage === p && s.activePage} onClick={ ()=>props.onPageClick(p)}>{p}</span>
+        })}
 
-            {this.props.users.map((i) => {
-                return (
+        {props.users.map((i) => {
+            return (
                 <div className={s.userClass}>
                     <div>
                         <img src={i.photos.small !== null ? i.photos.small : userPhoto}/>
@@ -40,13 +30,13 @@ class Users extends React.Component {
                     <div>{i.name}</div>
                     <div>{i.status}</div>
                     {i.followed ? (
-                        <button onClick={() => this.props.onUnFollow(i.id)}>Unfollow</button>
+                        <button onClick={() => props.unfollow(i.id)}>Unfollow</button>
                     ) : (
-                        <button onClick={() => this.props.onFollow(i.id)}>Follow</button>
+                        <button onClick={() => props.follow(i.id)}>Follow</button>
                     )}
                 </div>
             );
         })}</div>
-    }
 }
+
 export default Users

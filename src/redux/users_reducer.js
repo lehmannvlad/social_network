@@ -2,14 +2,17 @@ import React from "react";
 
 const FOLLOW = "FOLLOW";
 const UNFOLLOW = "UNFOLLOW";
-const SET_USERS = 'SET-USERS'
-const SET_USER_TOTAL_COUNT = 'USER-TOTAL-COUNT'
+const SET_USERS = 'SET-USERS';
+const SET_USER_TOTAL_COUNT = 'USER-TOTAL-COUNT';
+const SET_PAGE = 'SET-PAGE';
+const CHANGE_FETCHING_STATUS = 'CHANGE-FETCHING-STATUS';
 
 let initialState = {
   users: [],
   usersPerPage: 5,
-  usersCurrentPage: 3,
+  usersCurrentPage: 1,
   usersTotalCount: 0,
+  isFetching: false,
 };
 
 const UserReducer = (state = initialState, action) => {
@@ -51,24 +54,38 @@ const UserReducer = (state = initialState, action) => {
         case SET_USER_TOTAL_COUNT:
             return {...state, usersTotalCount: action.totalCount/100}
 
-            default:
+        case SET_PAGE:
+            return {...state, usersCurrentPage: action.pageNumber}
+
+        case CHANGE_FETCHING_STATUS:
+            return {...state, isFetching: action.fetchingStatus}
+
+        default:
             return state;
+
     }
 };
 
-export const FollowAC = (id) => {
+export const setCurrentPage = (pageNumber)=>{
+    return {type: SET_PAGE, pageNumber};
+}
+export const follow = (id) => {
     return {type: FOLLOW, userID: id};
 };
 
-export const UnFollowAC = (id) => {
+export const unfollow = (id) => {
     return {type: UNFOLLOW, userID: id};
 };
 
-export const UserSetterAC = (users) => {
+export const setUsers = (users) => {
     return {type: SET_USERS, users};
 }
 
-export const SetUsersCountAC = (totalCount)=>{
+export const setUsersTotalCount = (totalCount)=>{
     return {type: SET_USER_TOTAL_COUNT, totalCount}
+}
+
+export const changeFetchingStatus = (fetchingStatus)=>{
+    return {type: CHANGE_FETCHING_STATUS, fetchingStatus}
 }
 export default UserReducer;
