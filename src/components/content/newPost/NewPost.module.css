@@ -6,8 +6,8 @@ button {
 	border: 3px solid #3a7999;
 }
 
-button:hover {
-	border: 3px dotted #3a7999;
-	color: #3a7999;
-	background: rgba(0,0,0,0);
-}
+/*button:hover {*/
+/*	border: 3px dotted #3a7999;*/
+/*	color: #3a7999;*/
+/*	background: rgba(0,0,0,0);*/
+/*}*/

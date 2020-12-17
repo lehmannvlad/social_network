@@ -1,6 +1,7 @@
 const ADD_POST = 'ADD-POST';
 const EDIT_POST = 'EDIT-POST';
 const DELETE_POST = 'DELETE-POST';
+const SET_USER_PROFILE = 'SET-USER-PROFILE';
 
 let initialState = {
   posts: [
@@ -9,11 +10,12 @@ let initialState = {
     { id: 3, text: "Awful post!" },
   ],
   postText: "Default post text",
+  profile: null,
 };
 
 const ProfileReducer = (state = initialState, action) => {
   switch (action.type) {
-    case ADD_POST:
+    case ADD_POST:{
       let newPost = {
         id: state.posts.length + 1,
         text: state.postText,
@@ -23,34 +25,40 @@ const ProfileReducer = (state = initialState, action) => {
         posts: [...state.posts, newPost],
         postText: "",
       };
-
-    case EDIT_POST:
+    }
+    case EDIT_POST:{
       return {
         ...state,
         postText: action.text,
       };
-
+    }
+    case SET_USER_PROFILE:{
+      return {
+      ...state, profile: action.profile
+      }
+    }
     default:
       return state;
   }
 };
-
 export const addNewPostActionCreator = () => ({ type: ADD_POST });
-
 export const editPostTextActionCreator = (text) => {
   return {
     type: EDIT_POST,
     text: text,
   };
 };
-
 export const deletePostActionCreator = (index) => {
   return {
     type: DELETE_POST,
     postIndex: index,
   };
 };
-
+export const setUserProfile = (profile) => {
+  return {
+    type: SET_USER_PROFILE, profile
+  };
+};
 export default ProfileReducer;
 
 // case
